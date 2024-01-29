@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Generator</title> 
+
+    <style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+   
+    
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #222831;
+}
+
+#mainDiv {
+    width: 330px;
+    background-color: #00ADB5;
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#textDiv {
+    margin-bottom: 20px;
+}
+
+label {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    display: block;
+    margin-bottom: 5px;
+    border: 1px solid #333; /* Added border to the label */
+    padding: 8px; /* Added padding for better visibility */
+}
+
+input {
+    margin: 8px 0;
+}
+
+/* Style for the password length input */
+input[type="number"] {
+    width: 45px; /* Adjusted width for smaller input */
+    padding: 2px;
+    box-sizing: border-box;
+    margin-right: 10px; /* Added margin to separate from checkboxes */
+}
+
+/* Additional styling for checkboxes */
+input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+/* Arrange all elements in a single row */
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap; /* Allow items to wrap to the next line if necessary */
+    margin-bottom: 10px; /* Added margin for spacing */
+}
+
+button {
+    width: 100px;
+    height: 25px;
+}
+
+
+
+
+
+
+
+
+            
+        
+    </style>
+</head>
+<body>
+
+    <div id="mainDiv">
+        <label id="lbl">Get Your Password</label>
+        <div class="checkbox-group">
+            Select Length Of Your Password: <input type="number" id="num">
+            Cointains UpperCase: <input type="checkbox" id="upper">
+            Cointains LowerCase: <input type="checkbox" id="lower">
+            Cointains Numbers: <input type="checkbox" id="numCheck">
+            Cointains Symboles: <input type="checkbox" id="sym">
+        </div>
+        <button id="btn">Generate</button>
+    </div>
+
+    <script>
+        document.getElementById("btn").addEventListener("click", function () {
+            var password = getPass();
+            document.getElementById("lbl").innerHTML = password;
+        });
+
+        function getPass() {
+            var num = parseInt(document.getElementById("num").value);
+            var upperCase = document.getElementById("upper");
+            var lowerCase = document.getElementById("lower");
+            var numCheck = document.getElementById("numCheck");
+            var sym = document.getElementById("sym");
+            
+
+            var upperSet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            var lowerSet = "abcdefghijklmnopqrstuvwxyz";
+            var numberSet = "1234567890";
+            var symboleSet = "!@#$";
+
+            let randomPss = (dataSet) => {
+                return dataSet[Math.floor(Math.random() * dataSet.length)];
+            };
+
+            let generatPass = (password = "") => {
+                if (upperCase.checked) {
+                    password += randomPss(upperSet);
+                }
+                if (lowerCase.checked) {
+                    password += randomPss(lowerSet);
+                }
+                if (numCheck.checked) {
+                    password += randomPss(numberSet);
+                }
+                if (sym.checked) {
+                    password += randomPss(symboleSet);
+                }
+
+                if (password.length - 1 < num) {
+                    return generatPass(password);
+                }
+
+                return password;
+            };
+
+            return generatPass();
+        }
+    </script>
+</body>
+
+</html>
